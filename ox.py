@@ -37,17 +37,24 @@ def does_game_last(table):
     """
     global draw
 
-    # Check win of someone
-    if((table[6] == table[7] == table[8] and table[6] != ' ' and table[7] != ' ' and table[8] != ' ') or 
-        (table[5] == table[4] == table[3] and table[5] != ' ' and table[4] != ' ' and table[3] != ' ') or
-        (table[2] == table[1] == table[0] and table[2] != ' ' and table[1] != ' ' and table[0] != ' ') or
-        (table[6] == table[4] == table[2] and table[6] != ' ' and table[4] != ' ' and table[2] != ' ') or
-        (table[8] == table[4] == table[0] and table[8] != ' ' and table[4] != ' ' and table[0] != ' ') or
-        (table[6] == table[3] == table[0] and table[6] != ' ' and table[3] != ' ' and table[0] != ' ') or
-        (table[7] == table[4] == table[1] and table[7] != ' ' and table[4] != ' ' and table[1] != ' ') or
-        (table[8] == table[5] == table[2] and table[8] != ' ' and table[5] != ' ' and table[2] != ' ')):
-        return False
-    
+    # Check if win
+    for i in range(0, 9, 4):
+        # Vertical win
+        if table[i] == table[(i + 3) % 9] == table[(i + 6) % 9] != ' ':
+            return False
+
+        # Horizontal win + cross win
+        if i == 0:
+            if table[i] == table[i + 1] == table[i + 2] != ' ' or table[i] == table[i + 4] == table[i + 8] != ' ':
+                return False
+        if i == 4:
+            if table[i] == table[i - 1] == table[i + 1] != ' ' or table[i] == table[i + 2] == table[i - 2] != ' ':
+                return False
+        if i == 8:
+            if table[i] == table[i - 1] == table[i - 2] != ' ':
+                return False
+
+
     # Check if move is still possible
     for i in range(0, 8):
         if(table[i] == ' '):
