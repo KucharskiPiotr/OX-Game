@@ -44,13 +44,12 @@ def does_game_last(table):
 
     # Horizontal win
     for i in range(1, 8, 3):
-        table[i - 1] == table[i] == table[i + 1] != ' ':
+        if table[i - 1] == table[i] == table[i + 1] != ' ':
             return False
 
     # Cross win    
     if table[4] == table[6] == table[2] != ' ' or table[4] == table[0] == table[8] != ' ':
         return False
-
 
     # Check if move is still possible or it's draw
     for i in range(0, 8):
