@@ -1,13 +1,24 @@
+"""
+    Simple console OX game
+    Author: Piotr Kucharski
+"""
+
+# Global variable to set draw
 draw = False
 
-def print_field(tablica):
-    print(" %c | %c | %c \n" % (tablica[6], tablica[7], tablica[8]) + 
+def print_field(table):
+    print(" %c | %c | %c \n" % (table[6], table[7], table[8]) + 
           "-----------\n" +
-          " %c | %c | %c \n" % (tablica[3], tablica[4], tablica[5]) +
+          " %c | %c | %c \n" % (table[3], table[4], table[5]) +
           "-----------\n" +
-          " %c | %c | %c \n" % (tablica[0], tablica[1], tablica[2]))
+          " %c | %c | %c \n" % (table[0], table[1], table[2]))
 
 def get_input():
+    """
+    Method gets index of field to be set by user sign
+    returns: index of field as table index
+    """
+
     print(" 7 | 8 | 9 \n" +
           " 4 | 5 | 6 \n" +
           " 1 | 2 | 3 \n Podaj miejsce: ")
@@ -19,21 +30,27 @@ def get_input():
 
     return a
 
-def is_game_finished(tablica):
+def does_game_last(table):
+    """
+    Method checks if game has finished
+    returns: False when game is finished, True otherwise
+    """
     global draw
 
-    if((tablica[6] == tablica[7] == tablica[8] and tablica[6] != ' ' and tablica[7] != ' ' and tablica[8] != ' ') or 
-        (tablica[5] == tablica[4] == tablica[3] and tablica[5] != ' ' and tablica[4] != ' ' and tablica[3] != ' ') or
-        (tablica[2] == tablica[1] == tablica[0] and tablica[2] != ' ' and tablica[1] != ' ' and tablica[0] != ' ') or
-        (tablica[6] == tablica[4] == tablica[2] and tablica[6] != ' ' and tablica[4] != ' ' and tablica[2] != ' ') or
-        (tablica[8] == tablica[4] == tablica[0] and tablica[8] != ' ' and tablica[4] != ' ' and tablica[0] != ' ') or
-        (tablica[6] == tablica[3] == tablica[0] and tablica[6] != ' ' and tablica[3] != ' ' and tablica[0] != ' ') or
-        (tablica[7] == tablica[4] == tablica[1] and tablica[7] != ' ' and tablica[4] != ' ' and tablica[1] != ' ') or
-        (tablica[8] == tablica[5] == tablica[2] and tablica[8] != ' ' and tablica[5] != ' ' and tablica[2] != ' ')):
+    # Check win of someone
+    if((table[6] == table[7] == table[8] and table[6] != ' ' and table[7] != ' ' and table[8] != ' ') or 
+        (table[5] == table[4] == table[3] and table[5] != ' ' and table[4] != ' ' and table[3] != ' ') or
+        (table[2] == table[1] == table[0] and table[2] != ' ' and table[1] != ' ' and table[0] != ' ') or
+        (table[6] == table[4] == table[2] and table[6] != ' ' and table[4] != ' ' and table[2] != ' ') or
+        (table[8] == table[4] == table[0] and table[8] != ' ' and table[4] != ' ' and table[0] != ' ') or
+        (table[6] == table[3] == table[0] and table[6] != ' ' and table[3] != ' ' and table[0] != ' ') or
+        (table[7] == table[4] == table[1] and table[7] != ' ' and table[4] != ' ' and table[1] != ' ') or
+        (table[8] == table[5] == table[2] and table[8] != ' ' and table[5] != ' ' and table[2] != ' ')):
         return False
     
+    # Check if move is still possible
     for i in range(0, 8):
-        if(tablica[i] == ' '):
+        if(table[i] == ' '):
             return True
     else:
         draw = True
@@ -42,23 +59,29 @@ def is_game_finished(tablica):
     return True
 
 def main():
+    """
+    Main game loop
+    """
+
     is_game = True
     x_turn = True
-    tablica = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    table = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
     while(is_game):
-        print_field(tablica)
+        print_field(table)
         print("\n")
         if x_turn:
-            tablica[get_input()] = 'X'
+            table[get_input()] = 'X'
             x_turn = False
         else:
-            tablica[get_input()] = 'O'
+            table[get_input()] = 'O'
             x_turn = True
-        is_game = is_game_finished(tablica)
+        is_game = does_game_last(table)
     
     print("\n")
-    print_field(tablica)
+    print_field(table)
+
+    # Decide who won the game
     if draw:
         print("Draw!\n")
     else:
