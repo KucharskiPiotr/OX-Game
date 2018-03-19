@@ -61,6 +61,15 @@ def does_game_last(table):
 
     return True
 
+def game_logic(table, x_turn, is_game):
+    if x_turn:
+        table[get_input()] = 'X'
+        x_turn = False
+    else:
+        table[get_input()] = 'O'
+        x_turn = True
+    is_game = does_game_last(table)
+
 def main():
     """
     Main game loop
@@ -73,13 +82,7 @@ def main():
     while(is_game):
         print_field(table)
         print("\n")
-        if x_turn:
-            table[get_input()] = 'X'
-            x_turn = False
-        else:
-            table[get_input()] = 'O'
-            x_turn = True
-        is_game = does_game_last(table)
+        game_logic(table, x_turn, is_game)
     
     print("\n")
     print_field(table)
